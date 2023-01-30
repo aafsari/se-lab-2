@@ -13,6 +13,8 @@ const notes = [
 ]
 const friendships = [[1,2]]
 
+const friendsList = (user)=> friendships.filter(f => f.includes(user)).map(f => f.filter(u => u!== user)).flat()
+
 
 router.get('/profile/:id/notes', (req, res, next) => {
     const {id} = req.params
@@ -43,10 +45,7 @@ router.get('/profile/:id/friends', (req, res, next) => {
     if(!user){
         res.status(404).send("user not found")
     }else{
-        const usersFriends = friendships
-        .filter(f => f.includes(Number(id)))
-        .map(f => f.filter(u => u!== Number(id)))
-        .flat()
+        const usersFriends = friendsList(Number(id))
         res.json(usersFriends)
     }
 })
@@ -63,9 +62,8 @@ router.post('/profile/:id/friends', (req, res, next) => {
     }
     if(id === friendId){
         res.status(401).send("invalid action")
-        return
-    }
-    if(friendships.filter(f => f.includes(Number(id))).map(f => f.filter(u => u!== Number(id))).flat().includes(Number(friendId))){
+        return 
+    }if(friendsList(user.id).includes(friend.id)){
         res.status(401).send("already a friend")
         return
     }else{
@@ -105,6 +103,7 @@ router.get('/profile/:id', (req, res, next) => {
         res.json(user)
     }
 })
+
 
 
 export default router
