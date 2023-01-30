@@ -7,12 +7,11 @@ const users = [
     {id:3, username:'user3', email:'user3@gmail.com'},
     {id:2, username:'user2', email:'user2@gmail.com'}
 ]
-
-
 const notes = [
     {author:1, content:"simple note", attachment:null },
     {author:1, content:"simple note", attachment:null }
 ]
+const friendships = [[1,2]]
 
 
 router.get('/profile/:id/notes', (req, res, next) => {
@@ -36,7 +35,6 @@ router.post('/profile/:id/notes', (req, res, next) => {
     }
 })
 
-const friendships = [[1,2]]
 
 router.get('/profile/:id/friends', (req, res, next) => {
     const {id} = req.params
@@ -61,11 +59,15 @@ router.post('/profile/:id/friends', (req, res, next) => {
     console.log(user);
     if(!user || !friend){
         res.status(404).send("user not found")
+        return
     }
-    else if(id === friendId){
+    if(id === friendId){
         res.status(401).send("invalid action")
-    }else if(friendships.filter(f => f.includes(Number(id))).map(f => f.filter(u => u!== Number(id))).flat().includes(Number(friendId))){
+        return
+    }
+    if(friendships.filter(f => f.includes(Number(id))).map(f => f.filter(u => u!== Number(id))).flat().includes(Number(friendId))){
         res.status(401).send("already a friend")
+        return
     }else{
         const newFriendship = [user.id, friend.id]
         friendships.push(newFriendship)
@@ -103,7 +105,6 @@ router.get('/profile/:id', (req, res, next) => {
         res.json(user)
     }
 })
-
 
 
 export default router
