@@ -6,6 +6,22 @@ const users = [
     {id:1, username:'user1', email:'user1@gmail.com'},
     {id:2, username:'user2', email:'user2@gmail.com'}]
 
+const friendships = [[1,2]]
+
+router.get('/profile/:id/friends', (req, res, next) => {
+    const {id} = req.params
+    const user = users.find(u=>u.id === Number(id))
+    console.log(user);
+    if(!user){
+        res.status(404).send("user not found")
+    }else{
+        const usersFriends = friendships
+        .filter(f => f.includes(Number(id)))
+        .map(f => f.filter(u => u!== Number(id)))
+        res.json(usersFriends)
+    }
+})
+
 
 router.post('/profile', (req, res, next) => {
     const {username, email} = req.body
