@@ -4,7 +4,14 @@ const router = Router()
 
 const users = [
     {id:1, username:'user1', email:'user1@gmail.com'},
-    {id:2, username:'user2', email:'user2@gmail.com'}]
+    {id:2, username:'user2', email:'user2@gmail.com'}
+]
+
+
+const notes = [
+    {author:1, content:"simple note", attachment:null },
+    {author:1, content:"simple note", attachment:null }
+]
 
 
 router.post('/profile', (req, res, next) => {
@@ -36,6 +43,13 @@ router.get('/profile/:id', (req, res, next) => {
     }else{
         res.json(user)
     }
+})
+
+router.get('/notes/:id', (req, res, next) => {
+    const {id} = req.params
+    const usersNotes = notes.find(n=>n.author === Number(id))
+    console.log(usersNotes);
+    res.json(usersNotes)
 })
 
 
