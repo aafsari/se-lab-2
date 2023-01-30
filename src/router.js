@@ -14,11 +14,25 @@ const notes = [
 ]
 
 
-router.get('profile/:id/notes', (req, res, next) => {
+router.get('/profile/:id/notes', (req, res, next) => {
     const {id} = req.params
     const usersNotes = notes.find(n=>n.author === Number(id))
     console.log(usersNotes);
     res.json(usersNotes)
+})
+
+
+router.post('/profile/:id/notes', (req, res, next) => {
+    const {id} = req.params
+    const {content} = req.body
+    const user = users.find(u=>u.id === Number(id))
+    if(!user){
+        res.status(404).send("user not found")
+    }else{
+        const newNote = {author:id, content}
+        notes.push(newNote)
+        res.json(newNote)
+    }
 })
 
 
