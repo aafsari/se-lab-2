@@ -10,8 +10,11 @@ router.get('/profile/:id', (req, res, next) => {
     const {id} = req.params
     const user = users.find(u=>u.id===Number(id))
     console.log(user);
-    res.json(user)
-
+    if(!user){
+        res.status(404).send("user not found")
+    }else{
+        res.json(user)
+    }
 })
 
 export default router
