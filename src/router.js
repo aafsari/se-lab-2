@@ -16,6 +16,17 @@ router.post('/profile', (req, res, next) => {
     res.json(newUser)
 })
 
+router.put('/profile/:id', (req, res, next) => {
+    const {id} = req.params
+    const {username, email} = req.body
+    const currentIndex = users.findIndex(u=>u.id===Number(id))
+    users.splice(currentIndex, 1)
+    const newUser = {id, username, email}
+    console.log(newUser);
+    users.push(newUser)
+    res.json(newUser)
+})
+
 router.get('/profile/:id', (req, res, next) => {
     const {id} = req.params
     const user = users.find(u=>u.id===Number(id))
