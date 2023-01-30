@@ -5,7 +5,36 @@ const router = Router()
 const users = [
     {id:1, username:'user1', email:'user1@gmail.com'},
     {id:3, username:'user3', email:'user3@gmail.com'},
-    {id:2, username:'user2', email:'user2@gmail.com'}]
+    {id:2, username:'user2', email:'user2@gmail.com'}
+]
+
+
+const notes = [
+    {author:1, content:"simple note", attachment:null },
+    {author:1, content:"simple note", attachment:null }
+]
+
+
+router.get('/profile/:id/notes', (req, res, next) => {
+    const {id} = req.params
+    const usersNotes = notes.find(n=>n.author === Number(id))
+    console.log(usersNotes);
+    res.json(usersNotes)
+})
+
+
+router.post('/profile/:id/notes', (req, res, next) => {
+    const {id} = req.params
+    const {content} = req.body
+    const user = users.find(u=>u.id === Number(id))
+    if(!user){
+        res.status(404).send("user not found")
+    }else{
+        const newNote = {author:id, content}
+        notes.push(newNote)
+        res.json(newNote)
+    }
+})
 
 const friendships = [[1,2]]
 
