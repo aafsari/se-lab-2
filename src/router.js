@@ -14,6 +14,14 @@ const notes = [
 ]
 
 
+router.get('profile/:id/notes', (req, res, next) => {
+    const {id} = req.params
+    const usersNotes = notes.find(n=>n.author === Number(id))
+    console.log(usersNotes);
+    res.json(usersNotes)
+})
+
+
 router.post('/profile', (req, res, next) => {
     const {username, email} = req.body
     const id = users.length
@@ -43,13 +51,6 @@ router.get('/profile/:id', (req, res, next) => {
     }else{
         res.json(user)
     }
-})
-
-router.get('/notes/:id', (req, res, next) => {
-    const {id} = req.params
-    const usersNotes = notes.find(n=>n.author === Number(id))
-    console.log(usersNotes);
-    res.json(usersNotes)
 })
 
 
