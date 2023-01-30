@@ -6,6 +6,16 @@ const users = [
     {id:1, username:'user1', email:'user1@gmail.com'},
     {id:2, username:'user2', email:'user2@gmail.com'}]
 
+
+router.post('/profile', (req, res, next) => {
+    const {username, email} = req.body
+    const id = users.length
+    const newUser = {id, username, email}
+    console.log(newUser);
+    users.push(newUser)
+    res.json(newUser)
+})
+
 router.get('/profile/:id', (req, res, next) => {
     const {id} = req.params
     const user = users.find(u=>u.id===Number(id))
@@ -16,5 +26,7 @@ router.get('/profile/:id', (req, res, next) => {
         res.json(user)
     }
 })
+
+
 
 export default router
