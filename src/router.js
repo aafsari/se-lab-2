@@ -61,6 +61,11 @@ router.post('/profile/:id/friends', (req, res, next) => {
     console.log(user);
     if(!user || !friend){
         res.status(404).send("user not found")
+    }
+    else if(id === friendId){
+        res.status(401).send("invalid action")
+    }else if(friendships.filter(f => f.includes(Number(id))).map(f => f.filter(u => u!== Number(id))).flat().includes(Number(friendId))){
+        res.status(401).send("already a friend")
     }else{
         const newFriendship = [user.id, friend.id]
         friendships.push(newFriendship)
