@@ -54,14 +54,14 @@ router.get('/profile/:id/friends', (req, res, next) => {
 
 router.post('/profile/:id/friends', (req, res, next) => {
     const {id} = req.params
-    const {friend} = req.body
+    const {friendId} = req.body
     const user = users.find(u=>u.id === Number(id))
-    const friend = users.find(u=>u.id === Number(friend))
+    const friend = users.find(u=>u.id === Number(friendId))
     console.log(user);
     if(!user || !friend){
         res.status(404).send("user not found")
     }else{
-        const newFriendship = [user, friend]
+        const newFriendship = [user.id, friend.id]
         friendships.push(newFriendship)
         res.json(newFriendship)
     }
@@ -69,7 +69,7 @@ router.post('/profile/:id/friends', (req, res, next) => {
 
 router.post('/profile', (req, res, next) => {
     const {username, email} = req.body
-    const id = users.length
+    const id = users.length + 1
     const newUser = {id, username, email}
     console.log(newUser);
     users.push(newUser)
