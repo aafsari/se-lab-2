@@ -2,6 +2,7 @@
   "name": "git-exp",
   "version": "1.0.0",
   "main": "index.js",
+  "type":"module",
   "author": "aafsari <amirafsari99@yahoo.com>",
   "license": "MIT",
   "dependencies": {
