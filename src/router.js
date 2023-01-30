@@ -19,7 +19,7 @@ router.post('/profile', (req, res, next) => {
 router.put('/profile/:id', (req, res, next) => {
     const {id} = req.params
     const {username, email} = req.body
-    const currentIndex = users.findIndex(u=>u.id===Number(id))
+    const currentIndex = users.findIndex(u=>u.id === Number(id))
     users.splice(currentIndex, 1)
     const newUser = {id, username, email}
     console.log(newUser);
@@ -29,7 +29,7 @@ router.put('/profile/:id', (req, res, next) => {
 
 router.get('/profile/:id', (req, res, next) => {
     const {id} = req.params
-    const user = users.find(u=>u.id===Number(id))
+    const user = users.find(u=>u.id === Number(id))
     console.log(user);
     if(!user){
         res.status(404).send("user not found")
