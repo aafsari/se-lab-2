@@ -48,6 +48,7 @@ router.get('/profile/:id/friends', (req, res, next) => {
         const usersFriends = friendships
         .filter(f => f.includes(Number(id)))
         .map(f => f.filter(u => u!== Number(id)))
+        .flat()
         res.json(usersFriends)
     }
 })
